@@ -1,0 +1,6 @@
+# Binaries
+port
+*.exe
+
+# OS files
+.DS_Store
