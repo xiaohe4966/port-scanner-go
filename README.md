@@ -1,51 +1,46 @@
 # Port Scanner 🔍
 
-A simple and fast LAN port scanner written in Go.
+Go 实现的局域网端口扫描器，支持单端口快速扫描和全端口扫描，并发高效。
 
-## Files
+## 文件说明
 
-| File | Description |
-|------|-------------|
-| `main.go` | **Single-port scanner** — Scans a specific port (default `8000`) across all hosts in a `/24` subnet (e.g. `192.168.1.1–254`). Useful for quickly finding which machines in your LAN have a particular service running. |
-| `all.go` | **All-ports scanner** — Scans **all 65535 TCP ports** on every host in a `/24` subnet. Shows real-time progress and outputs a per-host summary of open ports. Useful for comprehensive network auditing. |
+| 文件 | 说明 |
+|------|------|
+| `main.go` | **单端口扫描** — 扫描 /24 子网中所有主机的指定端口（默认 `8000`）。适合快速查找局域网中运行特定服务的机器。 |
+| `all.go` | **全端口扫描** — 扫描 /24 子网中每台主机的全部 65535 个 TCP 端口，带实时进度显示和按主机汇总结果。适合全面的网络审计。 |
 
-## Features
+## 功能特性
 
-- 🚀 Concurrent scanning with configurable worker count (default 100 goroutines)
-- ⏱️ Adjustable connection timeout
-- 📊 Real-time progress display (`all.go`)
-- 📋 Clean summary of open ports
+- 🚀 并发扫描，可配置 worker 数量（默认 100 goroutine）
+- ⏱️ 可调节连接超时时间
+- 📊 实时进度显示（`all.go`）
+- 📋 扫描结果汇总输出
 
-## Usage
+## 使用方法
 
-### Single-port scan (`main.go`)
+### 单端口扫描（main.go）
 
 ```bash
 go run main.go
 ```
 
-Scans `192.168.1.1–254` on port `8000`. Edit the constants at the top of `main.go` to change:
+默认扫描 `192.168.1.1–254` 的 `8000` 端口。修改文件顶部的常量即可自定义：
 
-- `subnet` — target subnet prefix
-- `startIP` / `endIP` — IP range
-- `port` — target port
-- `timeout` — connection timeout
-- `workers` — concurrency level
+- `subnet` — 目标子网前缀
+- `startIP` / `endIP` — IP 范围
+- `port` — 目标端口
+- `timeout` — 连接超时
+- `workers` — 并发数
 
-### All-ports scan (`all.go`)
+### 全端口扫描（all.go）
 
 ```bash
 go run all.go
 ```
 
-Scans `192.168.1.1–254` on **all 65535 ports**. Edit the constants at the top of `all.go` to change:
+默认扫描 `192.168.1.1–254` 的 **全部 65535 个端口**。同样修改文件顶部常量即可自定义参数。
 
-- `subnet` — target subnet prefix
-- `startIP` / `endIP` — IP range
-- `timeout` — connection timeout
-- `workers` — concurrency level
-
-> ⚠️ Scanning all 65535 ports on 254 hosts = **~16.5M connections**. Make sure your network and system can handle it.
+> ⚠️ 254 台主机 × 65535 端口 = **约 1660 万次连接**，请确保网络和系统性能足够。
 
 ## License
 
